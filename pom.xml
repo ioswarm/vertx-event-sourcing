@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ioswarm</groupId>
+  <artifactId>vertx-event-sourcing</artifactId>
+  <version>0.1.0</version>
+  <name>Vertx Extension - EventSourcing</name>
+  
+  <properties>
+  	<source.version>1.8</source.version>
+  	<target.version>1.8</target.version>
+  </properties>
+  
+  <build>
+	<pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+	  			<artifactId>maven-compiler-plugin</artifactId>
+	  			<version>3.5.1</version>
+	  			<configuration>
+	  				<source>${source.version}</source>
+	  				<target>${target.version}</target>
+	  			</configuration>
+			</plugin>
+		</plugins>
+	</pluginManagement>
+  </build>
+  
+</project>

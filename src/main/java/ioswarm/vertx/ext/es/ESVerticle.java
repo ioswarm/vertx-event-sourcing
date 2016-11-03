@@ -4,6 +4,8 @@ import io.vertx.core.Verticle;
 
 public interface ESVerticle<T> extends Verticle {
 	
+	public String scope();
+	
 	public String id();
 	
 	public T persist(T t) throws Exception;

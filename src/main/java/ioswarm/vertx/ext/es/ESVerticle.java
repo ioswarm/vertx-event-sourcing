@@ -8,12 +8,15 @@ public interface ESVerticle<T> extends Verticle {
 	
 	public String id();
 	
-	public T persist(T t) throws Exception;
+	default public String scopeAddress() { return "__ioswarm.es."+scope(); }
+	default public String address() { return scopeAddress()+"."+id(); }
 	
-	public void recover(T t);
+	public Event<T> persist(Event<T> evt) throws Exception;
 	
-	public void receive(T t) throws Exception;
+	public void recover(Event<T> evt);
 	
-	public void snapshot(T t) throws Exception;
+	public void receive(Event<T> t) throws Exception;
+	
+	public void snapshot() throws Exception;
 	
 }

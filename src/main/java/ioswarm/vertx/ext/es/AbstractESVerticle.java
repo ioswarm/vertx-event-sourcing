@@ -7,13 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.Instant;
 
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
+import ioswarm.vertx.service.Service;
 
-public abstract class AbstractESVerticle<T> extends AbstractVerticle implements ESVerticle<T> {
+public abstract class AbstractESVerticle<T> extends Service implements ESVerticle<T> {
 	
 	@Override
 	public void start() throws Exception {

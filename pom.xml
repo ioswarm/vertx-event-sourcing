@@ -28,9 +28,9 @@
   
   <dependencies>
   	<dependency>
-  		<groupId>io.vertx</groupId>
-  		<artifactId>vertx-core</artifactId>
-  		<version>3.3.3</version>
+  		<groupId>ioswarm</groupId>
+  		<artifactId>vertx-service</artifactId>
+  		<version>0.1.0</version>
   	</dependency>
   </dependencies>
 </project>

@@ -28,7 +28,9 @@ public class EventHandler<T> {
 	}
 	
 	public void send(String command, String id, T t, Handler<AsyncResult<Message<Void>>> replyHandler) {
-		DeliveryOptions opt = new DeliveryOptions().addHeader("command", command);
+		DeliveryOptions opt = new DeliveryOptions()
+				.addHeader("command", command)
+				.addHeader("shard", id);
 		vertx.eventBus().send(address(id), t, opt, replyHandler);
 	}
 	

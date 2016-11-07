@@ -18,9 +18,9 @@ public class EventHandler<T> {
 	
 	public Vertx getVertx() { return vertx; } 
 	
-	public String getScope() { return scope; }
+	public String scope() { return scope; }
 	
-	public String scopeAddress() { return "__ioswarm.es."+getScope(); }
+	public String scopeAddress() { return "__ioswarm.es."+scope(); }
 	public String address(String id) { return scopeAddress()+"."+id; }
 	
 	public void send(String command, String id, T t) {
@@ -31,7 +31,7 @@ public class EventHandler<T> {
 		DeliveryOptions opt = new DeliveryOptions()
 				.addHeader("command", command)
 				.addHeader("shard", id);
-		vertx.eventBus().send(address(id), t, opt, replyHandler);
+		vertx.eventBus().send(scopeAddress(), t, opt, replyHandler);
 	}
 	
 }

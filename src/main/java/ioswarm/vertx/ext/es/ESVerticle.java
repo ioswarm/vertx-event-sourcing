@@ -13,7 +13,7 @@ public interface ESVerticle<T> extends Verticle {
 	
 	public Event<T> persist(Event<T> evt) throws Exception;
 	
-	public void recover(Event<T> evt);
+	public void recover(Event<T> evt) throws Exception;
 	
 	public void receive(Event<T> t) throws Exception;
 	

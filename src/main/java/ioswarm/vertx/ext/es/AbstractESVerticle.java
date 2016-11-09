@@ -7,42 +7,50 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.Instant;
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Future;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
+import io.vertx.core.eventbus.MessageConsumer;
 import ioswarm.vertx.service.Service;
 
 public abstract class AbstractESVerticle<T> extends Service implements ESVerticle<T> {
 	
+	private MessageConsumer<T> msgConsumer;
+	
 	@Override
 	public void start() throws Exception {
 		EventBus eb = vertx.eventBus();
-		eb.consumer(address(), this::handleReceiveEvent);
+		msgConsumer = eb.consumer(address(), this::handleReceiveEvent);
+	}
+	
+	@Override
+	public void stop() throws Exception {
+		if (msgConsumer != null) 
+			msgConsumer.unregister();
 	}
 	
 	@Override
 	public void receive(final Event<T> t) throws Exception {
-		vertx.executeBlocking((Future<Event<T>> f) -> {
-			try {
-				f.complete(persist(t));
-			} catch(Exception e) {
-				f.fail(e);
-			}
-		}, (AsyncResult<Event<T>> res) -> {
-			if (res.succeeded())
-				recover(res.result());
-			else
-				res.cause().printStackTrace();
-		});
+//		vertx.executeBlocking((Future<Event<T>> f) -> {
+//			try {
+//				f.complete(persist(t));
+//			} catch(Exception e) {
+//				f.fail(e);
+//			}
+//		}, (AsyncResult<Event<T>> res) -> {
+//			if (res.succeeded())
+//				recover(res.result());
+//			else
+//				res.cause().printStackTrace();
+//		});
+		Event<T> x = persist(t);
+		recover(x);
+		x.reply();
 	}
 	
 	public void handleReceiveEvent(Message<T> msg) {
 		try {
-			System.out.println("receive command ... ");
 			String cmd = msg.headers().get("command");
-			receive(new Event<T>(id(), Instant.now(), cmd == null ? "unknown" : cmd, msg.body()));
-			msg.reply(true);
+			receive(new Event<T>(id(), Instant.now(), cmd == null ? "unknown" : cmd, msg));
 		} catch(Exception e) {
 			msg.fail(-1, e.getMessage());
 		}

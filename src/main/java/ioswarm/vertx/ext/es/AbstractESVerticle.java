@@ -14,7 +14,7 @@ import ioswarm.vertx.service.Service;
 
 public abstract class AbstractESVerticle<T> extends Service implements ESVerticle<T> {
 	
-	private MessageConsumer<T> msgConsumer;
+	protected MessageConsumer<T> msgConsumer;
 	
 	@Override
 	public void start() throws Exception {
@@ -48,6 +48,7 @@ public abstract class AbstractESVerticle<T> extends Service implements ESVerticl
 	}
 	
 	public void handleReceiveEvent(Message<T> msg) {
+		info("call handleReceiveEvent from shard");
 		try {
 			String cmd = msg.headers().get("command");
 			receive(new Event<T>(id(), Instant.now(), cmd == null ? "unknown" : cmd, msg));

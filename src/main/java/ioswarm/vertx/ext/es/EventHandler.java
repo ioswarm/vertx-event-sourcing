@@ -30,7 +30,8 @@ public class EventHandler<T> {
 	public void send(String command, String id, T t, Handler<AsyncResult<Message<Void>>> replyHandler) {
 		DeliveryOptions opt = new DeliveryOptions()
 				.addHeader("command", command)
-				.addHeader("shard", id);
+				.addHeader("shard", id)
+				.setSendTimeout(3*60*1000);
 		vertx.eventBus().send(scopeAddress(), t, opt, replyHandler);
 	}
 	

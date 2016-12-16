@@ -27,7 +27,7 @@ public class EventHandler<T> {
 		send(command, id, t, null);
 	}
 	
-	public void send(String command, String id, T t, Handler<AsyncResult<Message<Void>>> replyHandler) {
+	public void send(String command, String id, T t, Handler<AsyncResult<Message<T>>> replyHandler) {
 		DeliveryOptions opt = new DeliveryOptions()
 				.addHeader("command", command)
 				.addHeader("shard", id)

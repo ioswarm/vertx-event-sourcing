@@ -53,6 +53,7 @@ public abstract class AbstractESVerticle<T> extends Service implements ESVerticl
 			String cmd = msg.headers().get("command");
 			receive(new Event<T>(id(), Instant.now(), cmd == null ? "unknown" : cmd, msg));
 		} catch(Exception e) {
+			error("ERROR while handle receive-event.", e);
 			msg.fail(-1, e.getMessage());
 		}
 	}
